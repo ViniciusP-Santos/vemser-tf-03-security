@@ -1,6 +1,5 @@
 package br.com.dbc.vemser.ecommerce.service;
 
-
 import br.com.dbc.vemser.ecommerce.entity.UsuarioEntity;
 import br.com.dbc.vemser.ecommerce.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,4 +15,13 @@ public class UsuarioService {
     public Optional<UsuarioEntity> findByLoginAndSenha(String login, String senha) {
         return usuarioRepository.findByLoginAndSenha(login, senha);
     }
+
+    public Optional<UsuarioEntity> findById(Integer idUsuario) {
+        return usuarioRepository.findById(idUsuario);
+    }
+
+    public Optional<UsuarioEntity> findByLogin(String login) {
+        return usuarioRepository.findByLogin(login);
+    }
 }
+
