@@ -7,6 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -59,4 +63,5 @@ public class UsuarioEntity implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
+
 }

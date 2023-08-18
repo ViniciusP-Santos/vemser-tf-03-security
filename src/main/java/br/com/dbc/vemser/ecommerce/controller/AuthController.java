@@ -21,11 +21,13 @@ import javax.validation.Valid;
 @Validated
 @RequiredArgsConstructor
 public class AuthController {
+
     public final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
     @PostMapping
     public String auth(@RequestBody @Valid LoginDTO loginDTO) throws RegraDeNegocioException {
+
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(
                         loginDTO.getLogin(),
