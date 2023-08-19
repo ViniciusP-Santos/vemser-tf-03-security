@@ -27,6 +27,9 @@ public class TokenService {
     @Value("${jwt.expiration}")
     private String expiration;
 
+    @Value("${jwt.expiration-visitante}")
+    private String expirationVisitante;
+
     @Value("${jwt.secret}")
     private String secret;
 
@@ -34,7 +37,14 @@ public class TokenService {
 
     public String generateToken(UsuarioEntity usuarioEntity) {
         Date now = new Date();
-        Date exp = new Date(now.getTime() + Long.parseLong(expiration));
+        boolean visitor = usuarioEntity.getCargos().stream().filter(cargo -> cargo.getNome().equals("RULE_VISITOR")).toList().isEmpty();
+        Date exp;
+
+        if (visitor) {
+            exp = new Date(now.getTime() + Long.parseLong(expirationVisitante));
+        } else {
+            exp = new Date(now.getTime() + Long.parseLong(expiration));
+        }
 
         List<String> cargos = usuarioEntity.getCargos().stream()
                 .map(CargoEntity::getAuthority)
@@ -45,6 +55,19 @@ public class TokenService {
                         .setIssuer("vemser-api")
                         .claim(Claims.ID, usuarioEntity.getIdUsuario().toString())
                         .claim(CARGOS_CLAIM, cargos)
+                        .setIssuedAt(now)
+                        .setExpiration(exp)
+                        .signWith(SignatureAlgorithm.HS256, secret)
+                        .compact();
+    }
+
+    public String generateVisitorToken() {
+        Date now = new Date();
+        Date exp = new Date(now.getTime() + Long.parseLong(expirationVisitante));
+
+        return TOKEN_PREFIX + " " +
+                Jwts.builder()
+                        .setIssuer("vemser-api")
                         .setIssuedAt(now)
                         .setExpiration(exp)
                         .signWith(SignatureAlgorithm.HS256, secret)

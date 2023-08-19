@@ -7,10 +7,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class ProdutoRelatorioDTO {
     private String modelo;
     private TipoSetor setor;
     private Double valor;
+
+    public ProdutoRelatorioDTO(String modelo, TipoSetor setor, Double valor) {
+        this.modelo = modelo;
+        this.setor = setor;
+        this.valor = valor;
+    }
 }

@@ -19,8 +19,8 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Integer>
     @Query("Select p From PRODUTO p where (:idProduto is null or p.idProduto = :idProduto)")
     List<ProdutoEntity> buscarTodosOptionalId(Integer idProduto);
 
-    @Query("Select new br.com.dbc.vemser.ecommerce.dto.produto.ProdutoEntityDTO(p.idProduto, p.url, p.modelo, " +
-            "p.tamanho, p.cor, p.descricao, p.setor,  p.valor) from PRODUTO p")
+    @Query("Select new br.com.dbc.vemser.ecommerce.dto.produto.ProdutoEntityDTO(p.idProduto, p.modelo, " +
+            "p.tamanho, p.cor, p.descricao, p.setor,  p.valor, p.imgUrl) from PRODUTO p")
     Page<ProdutoEntityDTO> buscarTodosProdutoPaginacao(Pageable pageable);
 
     @Query("Select new br.com.dbc.vemser.ecommerce.dto.produto.ProdutoRelatorioDTO(" +

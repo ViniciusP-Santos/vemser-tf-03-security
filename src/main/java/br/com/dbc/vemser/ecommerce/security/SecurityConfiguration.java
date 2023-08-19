@@ -29,9 +29,10 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
                         .antMatchers("/auth", "/").permitAll()
-                        .antMatchers(HttpMethod.GET, "/produto").hasAnyRole("ADMIN", "VISITANTE", "USUARIO")
-                        .antMatchers("/pedidos", "/pedidos/**").hasAnyRole("ADMIN", "USUARIO")
-                        .antMatchers("/endereco", "/endereco/**").hasAnyRole("ADMIN", "USUARIO")
+                        .antMatchers(HttpMethod.POST, "/cliente/**").hasAnyRole("ADMIN", "VISITANTE", "USUARIO")
+                        .antMatchers(HttpMethod.GET, "/produto/**").hasAnyRole("ADMIN", "VISITANTE", "USUARIO")
+                        .antMatchers("/pedido/**").hasAnyRole("ADMIN", "USUARIO")
+                        .antMatchers("/endereco/**").hasAnyRole("ADMIN", "USUARIO")
                         .antMatchers("/**").hasRole("ADMIN")
                         .anyRequest().denyAll()
                 );
