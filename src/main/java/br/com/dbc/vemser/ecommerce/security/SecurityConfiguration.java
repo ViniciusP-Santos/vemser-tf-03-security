@@ -3,6 +3,7 @@ package br.com.dbc.vemser.ecommerce.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,7 +29,11 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
                         .antMatchers("/auth", "/").permitAll()
-                        .anyRequest().authenticated()
+                        .antMatchers(HttpMethod.GET, "/produto").hasAnyRole("ADMIN", "VISITANTE", "USUARIO")
+                        .antMatchers("/pedidos", "/pedidos/**").hasAnyRole("ADMIN", "USUARIO")
+                        .antMatchers("/endereco", "/endereco/**").hasAnyRole("ADMIN", "USUARIO")
+                        .antMatchers("/**").hasRole("ADMIN")
+                        .anyRequest().denyAll()
                 );
         http.addFilterBefore(new TokenAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
 
@@ -61,7 +66,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

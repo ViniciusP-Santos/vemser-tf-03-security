@@ -2,14 +2,23 @@ package br.com.dbc.vemser.ecommerce.service;
 
 import br.com.dbc.vemser.ecommerce.dto.cliente.ClienteCreateDTO;
 import br.com.dbc.vemser.ecommerce.dto.cliente.ClienteDTO;
+import br.com.dbc.vemser.ecommerce.dto.cliente.ClienteDadosCompletosDTO;
+import br.com.dbc.vemser.ecommerce.dto.cliente.ClientePaginadoDTO;
+import br.com.dbc.vemser.ecommerce.dto.endereco.EnderecoDTO;
+import br.com.dbc.vemser.ecommerce.dto.pedido.PedidoDTO;
 import br.com.dbc.vemser.ecommerce.entity.ClienteEntity;
 import br.com.dbc.vemser.ecommerce.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.ecommerce.repository.ClienteRepository;
+import br.com.dbc.vemser.ecommerce.utils.ConverterEnderecoParaDTOutil;
+import br.com.dbc.vemser.ecommerce.utils.ConverterPedidoParaDTOutil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,9 +27,19 @@ public class ClienteService {
     private final ObjectMapper objectMapper;
     private final ClienteRepository clienteRepository;
 
+    private final ConverterEnderecoParaDTOutil converterEnderecoParaDTOutil;
+    private final ConverterPedidoParaDTOutil converterPedidoParaDTOutil;
+
 
     public ClienteDTO save(ClienteCreateDTO clienteCreateDTO) {
         return convertToDto(clienteRepository.save(convertToEntity(clienteCreateDTO)));
+    }
+
+    public List<ClienteDadosCompletosDTO> listarClientesComTodosOsDados() {
+
+        return clienteRepository.findAll()
+                .stream().map(this::converterClienteParaDTO).toList();
+
     }
 
     public List<ClienteDTO> findAll(Integer idCliente) {
@@ -28,6 +47,11 @@ public class ClienteService {
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    public Page<ClientePaginadoDTO> clientePaginado(Pageable pageable) {
+
+        return clienteRepository.buscarTodosClientesPaginados(pageable);
     }
 
     public ClienteDTO getByid(Integer idCliente) throws RegraDeNegocioException {
@@ -63,5 +87,25 @@ public class ClienteService {
 
     public ClienteEntity convertToEntity(ClienteCreateDTO clienteCreateDTO) {
         return objectMapper.convertValue(clienteCreateDTO, ClienteEntity.class);
+    }
+
+    private ClienteDadosCompletosDTO converterClienteParaDTO(ClienteEntity clienteEntity) {
+
+        Set<EnderecoDTO> enderecoDTO = clienteEntity.getEnderecoEntities()
+                .stream().map(converterEnderecoParaDTOutil::converterByEnderecoDTO)
+                .collect(Collectors.toSet());
+
+        Set<PedidoDTO> pedidoDTO = clienteEntity.getPedidoEntities()
+                .stream().map(c -> converterPedidoParaDTOutil.converterPedidooParaDTO(c))
+                .collect(Collectors.toSet());
+
+
+        ClienteDadosCompletosDTO clienteDadosCompletosDTO =
+                objectMapper.convertValue(clienteEntity, ClienteDadosCompletosDTO.class);
+
+        clienteDadosCompletosDTO.setEnderecoEntities(enderecoDTO);
+        clienteDadosCompletosDTO.setPedidoEntities(pedidoDTO);
+
+        return clienteDadosCompletosDTO;
     }
 }
