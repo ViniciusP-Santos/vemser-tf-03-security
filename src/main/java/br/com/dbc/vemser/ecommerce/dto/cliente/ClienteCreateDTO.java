@@ -16,23 +16,27 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class ClienteCreateDTO {
 
+    @NotNull
     @NotBlank
-    @Size(min = 2, message = "O nome deve ter no minimo 2 caracteres")
+    @Size(min = 2, max = 50, message = "O nome deve ter no minimo 2 caracteres")
     @Schema(description = "Nome da Pessoa", example = "Maria Matos", required = true)
     private String nome;
 
     @NotNull(message = "O número não pode ser nulo")
-    @Size(min = 9, max = 13, message = "O número precisa ter no mínimo 9 caracteres e no máximo 13")
-    @Schema(description = "Número de contato", required = true, example = "5548999008877")
+    @Size(min = 11, max = 11, message = "O número precisa ter 11 caracteres")
+    @Schema(description = "Número de contato", required = true, example = "48999008877", minLength = 11, maxLength = 11)
     private String telefone;
 
     @Email
+    @NotNull(message = "Email não pode ser nulo")
+    @NotBlank(message = "Email não pode ser vazio")
     @Schema(description = "Endereço de e-mail da pessoa", example = "nome.sobrenome@mail.com")
     private String email;
 
     @CPF
     @NotNull
-    @Schema(description = "CPF da pessoa", example = "123.456.789-09")
+    @Size(min = 11, max = 11, message = "O CPF precisa ter 11 caracteres")
+    @Schema(description = "CPF da pessoa", example = "12345678909", minLength = 11, maxLength = 11)
     private String cpf;
 
 }

@@ -23,16 +23,16 @@ public class ClienteEntity {
     @Column(name = "ID_CLIENTE")
     private Integer idCliente;
 
-    @Column(name = "NOME")
+    @Column(name = "NOME", length = 50)
     private String nome;
 
-    @Column(name = "TELEFONE")
+    @Column(name = "TELEFONE", unique = true, columnDefinition = "CHAR(11)")
     private String telefone;
 
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", unique = true, length = 100)
     private String email;
 
-    @Column(name = "CPF")
+    @Column(name = "CPF", unique = true, columnDefinition = "CHAR(11)")
     private String cpf;
 
     @JsonIgnore
