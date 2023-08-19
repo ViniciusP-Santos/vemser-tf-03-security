@@ -32,9 +32,7 @@ public class ProdutoService {
     }
 
     public Page<ProdutoEntityDTO> listarPaginado(Pageable pageable) {
-
         return produtoRepository.buscarTodosProdutoPaginacao(pageable);
-
     }
 
     public ProdutoDTO buscarProduto(Integer idProduto) throws RegraDeNegocioException {
