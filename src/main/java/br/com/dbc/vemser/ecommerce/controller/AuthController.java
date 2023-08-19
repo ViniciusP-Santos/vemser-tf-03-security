@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.ecommerce.controller;
 
+import br.com.dbc.vemser.ecommerce.service.UsuarioService;
 import br.com.dbc.vemser.ecommerce.dto.usuario.LoginDTO;
 import br.com.dbc.vemser.ecommerce.entity.UsuarioEntity;
 import br.com.dbc.vemser.ecommerce.exceptions.RegraDeNegocioException;
@@ -9,10 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,6 +21,7 @@ import javax.validation.Valid;
 public class AuthController {
     public final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
+    private final UsuarioService usuarioService;
 
     @PostMapping
     public String auth(@RequestBody @Valid LoginDTO loginDTO) throws RegraDeNegocioException {
@@ -39,5 +38,10 @@ public class AuthController {
         UsuarioEntity usuarioValidado = (UsuarioEntity) authentication.getPrincipal();
 
         return tokenService.generateToken(usuarioValidado);
+    }
+
+    @PostMapping("/cadastro")
+    public LoginDTO cadastro(@RequestBody LoginDTO user, @RequestParam(value = "role", required = false) Integer role) throws RegraDeNegocioException {
+        return usuarioService.cadastro(user, role);
     }
 }
