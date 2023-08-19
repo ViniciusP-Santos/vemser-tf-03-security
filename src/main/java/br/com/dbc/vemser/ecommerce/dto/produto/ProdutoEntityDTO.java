@@ -7,11 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class ProdutoEntityDTO {
     private Integer idProduto;
+    private String url;
     private String modelo;
     private TipoTamanho tamanho;
     private String cor;

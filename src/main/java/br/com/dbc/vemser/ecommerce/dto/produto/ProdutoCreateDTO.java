@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -15,6 +16,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class ProdutoCreateDTO {
 
+    @Schema(description = "URL da imagem", required = true, example = "https://www.imagemteste.com/imagemTeste")
+    private String url;
 
     @NotBlank
     @Schema(description = "Modelo do produto", required = true, example = "MANGALONGA")
