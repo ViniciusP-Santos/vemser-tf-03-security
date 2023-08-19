@@ -1,5 +1,7 @@
 package br.com.dbc.vemser.ecommerce.entity;
 
+import br.com.dbc.vemser.ecommerce.entity.enums.TipoSetor;
+import br.com.dbc.vemser.ecommerce.entity.enums.TipoTamanho;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,8 +33,9 @@ public class ProdutoEntity {
     private String modelo;
 
     @Column(name = "TAMANHO")
-    @NotBlank(message = "O tamanho não pode estar em branco")
-    private String tamanho;
+    @NotNull(message = "O tamanho não pode estar em branco")
+    @Enumerated(EnumType.STRING)
+    private TipoTamanho tamanho;
 
     @Column(name = "COR")
     @NotBlank(message = "A cor não pode estar em branco")
@@ -43,8 +46,9 @@ public class ProdutoEntity {
     private String descricao;
 
     @Column(name = "SETOR")
-    @NotBlank(message = "O setor não pode estar em branco")
-    private String setor;
+    @NotNull(message = "O setor não pode estar em branco")
+    @Enumerated(EnumType.STRING)
+    private TipoSetor setor;
 
     @Column(name = "VALOR")
     @NotNull(message = "O valor não pode estar em branco")
