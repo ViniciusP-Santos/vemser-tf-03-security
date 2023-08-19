@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.ecommerce.controller;
 
+import br.com.dbc.vemser.ecommerce.entity.CargoEntity;
 import br.com.dbc.vemser.ecommerce.service.UsuarioService;
 import br.com.dbc.vemser.ecommerce.dto.usuario.LoginDTO;
 import br.com.dbc.vemser.ecommerce.entity.UsuarioEntity;
@@ -13,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/auth")
@@ -44,4 +46,5 @@ public class AuthController {
     public LoginDTO cadastro(@RequestBody LoginDTO user, @RequestParam(value = "role", required = false) Integer role) throws RegraDeNegocioException {
         return usuarioService.cadastro(user, role);
     }
+
 }

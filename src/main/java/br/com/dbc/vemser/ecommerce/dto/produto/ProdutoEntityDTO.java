@@ -9,18 +9,26 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class ProdutoEntityDTO {
     private Integer idProduto;
-    private String url;
     private String modelo;
     private TipoTamanho tamanho;
     private String cor;
     private String descricao;
     private TipoSetor setor;
     private Double valor;
+    private String imgUrl;
 
-
+    public ProdutoEntityDTO(Integer idProduto, String modelo, TipoTamanho tamanho, String cor, String descricao, TipoSetor setor, Double valor, String imgUrl) {
+        this.idProduto = idProduto;
+        this.modelo = modelo;
+        this.tamanho = tamanho;
+        this.cor = cor;
+        this.descricao = descricao;
+        this.setor = setor;
+        this.valor = valor;
+        this.imgUrl = imgUrl;
+    }
 }
