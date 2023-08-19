@@ -19,30 +19,10 @@ public class ConverterProdutoParaDTOutil {
     private ObjectMapper objectMapper;
 
     public ProdutoDTO converteProdutoParaDTO(ProdutoEntity produtoEntityUpdate) {
-        ProdutoDTO produtoUpdateDTO = new ProdutoDTO();
-
-
-        produtoUpdateDTO.setIdProduto(produtoEntityUpdate.getIdProduto());
-        produtoUpdateDTO.setCor(produtoEntityUpdate.getCor());
-        produtoUpdateDTO.setModelo(produtoEntityUpdate.getModelo());
-        produtoUpdateDTO.setTamanho(produtoEntityUpdate.getTamanho());
-        produtoUpdateDTO.setIdProduto(produtoEntityUpdate.getIdProduto());
-        produtoUpdateDTO.setSetor(produtoEntityUpdate.getSetor());
-        produtoUpdateDTO.setValor(produtoEntityUpdate.getValor());
-
-
-        return produtoUpdateDTO;
+        return objectMapper.convertValue(produtoEntityUpdate, ProdutoDTO.class);
     }
 
     public ProdutoEntity converteDTOparaProduto(ProdutoCreateDTO produtoCreateDTO) {
-        ProdutoEntity produtoEntityConvertido = objectMapper.convertValue(produtoCreateDTO, ProdutoEntity.class);
-
-        produtoEntityConvertido.setCor(produtoCreateDTO.getCor());
-        produtoEntityConvertido.setModelo(produtoCreateDTO.getModelo());
-        produtoEntityConvertido.setTamanho(produtoCreateDTO.getTamanho());
-        produtoEntityConvertido.setSetor(produtoCreateDTO.getSetor());
-        produtoEntityConvertido.setValor(produtoCreateDTO.getValor());
-
-        return produtoEntityConvertido;
+        return objectMapper.convertValue(produtoCreateDTO, ProdutoEntity.class);
     }
 }
