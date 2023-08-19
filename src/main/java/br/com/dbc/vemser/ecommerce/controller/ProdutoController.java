@@ -4,6 +4,7 @@ import br.com.dbc.vemser.ecommerce.doc.ProdutoControllerDoc;
 import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoCreateDTO;
 import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoDTO;
 import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoEntityDTO;
+import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoRelatorioDTO;
 import br.com.dbc.vemser.ecommerce.service.ProdutoService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,16 @@ public class ProdutoController implements ProdutoControllerDoc {
 
         return new ResponseEntity<>(produtoService.listar(idProduto), HttpStatus.OK);
     }
+
+
+
+    @GetMapping("/relatorio-produto/")
+    public ResponseEntity<List<ProdutoRelatorioDTO>> listarRelatorioProduto()  {
+
+        return new ResponseEntity<>(produtoService.buscarProdutosRelatorio(), HttpStatus.OK);
+    }
+
+
 
     @GetMapping("paginacao")
     public Page<ProdutoEntityDTO> listarProdutosPaginados(

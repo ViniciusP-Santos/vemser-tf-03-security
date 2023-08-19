@@ -4,6 +4,7 @@ package br.com.dbc.vemser.ecommerce.doc;
 import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoCreateDTO;
 import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoDTO;
 import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoEntityDTO;
+import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoRelatorioDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -98,4 +99,17 @@ public interface ProdutoControllerDoc {
     public Page<ProdutoEntityDTO> listarProdutosPaginados(
             Integer pagina,
             Integer quantidadeRegistros) throws Exception;
+
+
+    @Operation(summary = "Listar todos produtos relatório modelo, setor e valor", description = "Lista todos produtos do banco")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Retorna lista do relatório do produto"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "404", description = "Página não encontrada"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
+    @GetMapping("/relatorio-produto/")
+    public ResponseEntity<List<ProdutoRelatorioDTO>> listarRelatorioProduto();
 }
