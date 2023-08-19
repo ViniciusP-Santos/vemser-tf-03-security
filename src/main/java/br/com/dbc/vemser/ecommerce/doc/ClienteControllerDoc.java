@@ -3,16 +3,35 @@ package br.com.dbc.vemser.ecommerce.doc;
 
 import br.com.dbc.vemser.ecommerce.dto.cliente.ClienteCreateDTO;
 import br.com.dbc.vemser.ecommerce.dto.cliente.ClienteDTO;
+import br.com.dbc.vemser.ecommerce.dto.cliente.ClienteDadosCompletosDTO;
+import br.com.dbc.vemser.ecommerce.dto.cliente.ClientePaginadoDTO;
 import br.com.dbc.vemser.ecommerce.exceptions.RegraDeNegocioException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 public interface ClienteControllerDoc {
+
+    @Operation(summary = "Listar todos clientes", description = "Lista todos os clientes do banco")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Retorna a lista de clientes"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "404", description = "Página não encontrada"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+
+
+    )
+    @GetMapping("/clientes-dados-completos")
+    public ResponseEntity<List<ClienteDadosCompletosDTO>> buscarClientesDadosCompletos();
+
 
     @Operation(summary = "Listar todos clientes", description = "Lista todos os clientes do banco")
     @ApiResponses(
@@ -76,5 +95,24 @@ public interface ClienteControllerDoc {
     )
     @DeleteMapping("/{idCliente}")
     ResponseEntity<Void> delete(@PathVariable Integer idCliente);
+
+
+
+
+
+
+    @Operation(summary = "Listar todos clientes com paginação", description = "Lista todos os clientes do banco")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Retorna a lista de clientes paginados"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "404", description = "Página não encontrada"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+
+
+    )
+    @GetMapping("/paginacao")
+    public Page<ClientePaginadoDTO> listarClientePaginado(Integer pagina, Integer quantidadeRegistros);
 
 }

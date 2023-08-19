@@ -4,6 +4,7 @@ package br.com.dbc.vemser.ecommerce.service;
 import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoCreateDTO;
 import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoDTO;
 import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoEntityDTO;
+import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoRelatorioDTO;
 import br.com.dbc.vemser.ecommerce.entity.ProdutoEntity;
 import br.com.dbc.vemser.ecommerce.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.ecommerce.repository.ProdutoRepository;
@@ -48,6 +49,11 @@ public class ProdutoService {
 
     }
 
+    public List<ProdutoRelatorioDTO> buscarProdutosRelatorio(){
+
+        return produtoRepository.buscarProdutosRelatorio();
+
+    }
 
     public ProdutoDTO salvar(ProdutoCreateDTO produtoCreateDTO) {
 

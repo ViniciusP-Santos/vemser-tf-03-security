@@ -2,6 +2,7 @@ package br.com.dbc.vemser.ecommerce.repository;
 
 
 import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoEntityDTO;
+import br.com.dbc.vemser.ecommerce.dto.produto.ProdutoRelatorioDTO;
 import br.com.dbc.vemser.ecommerce.entity.ProdutoEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,5 +22,9 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Integer>
     @Query("Select new br.com.dbc.vemser.ecommerce.dto.produto.ProdutoEntityDTO(p.idProduto, p.modelo, " +
             "p.tamanho, p.cor, p.setor,  p.valor) from PRODUTO p")
     Page<ProdutoEntityDTO> buscarTodosProdutoPaginacao(Pageable pageable);
+
+    @Query("Select new br.com.dbc.vemser.ecommerce.dto.produto.ProdutoRelatorioDTO(" +
+            " p.modelo  , p.setor , p.valor) from PRODUTO p ")
+    List<ProdutoRelatorioDTO> buscarProdutosRelatorio();
 
 }
