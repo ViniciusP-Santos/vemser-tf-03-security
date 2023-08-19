@@ -28,6 +28,10 @@ public class ProdutoEntity {
     @Column(name = "ID_PRODUTO")
     private Integer idProduto;
 
+    @Column(name = "URL")
+    private String url;
+
+
     @Column(name = "MODELO")
     @NotBlank(message = "O modelo não pode estar em branco")
     private String modelo;

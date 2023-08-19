@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.validation.constraints.*;
 
 @Data
@@ -14,6 +15,8 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 public class ProdutoCreateDTO {
 
+    @Schema(description = "URL da imagem", required = true, example = "https://www.imagemteste.com/imagemTeste")
+    private String url;
 
     @NotBlank
     @Size(min = 1, max = 30, message = "Verifique a quantidade de caracteres.")
