@@ -13,6 +13,7 @@ public class ProdutoEntityDTO {
     private String modelo;
     private String tamanho;
     private String cor;
+    private String descricao;
     private String setor;
     private Double valor;
 

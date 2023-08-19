@@ -19,7 +19,7 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Integer>
     List<ProdutoEntity> buscarTodosOptionalId(Integer idProduto);
 
     @Query("Select new br.com.dbc.vemser.ecommerce.dto.produto.ProdutoEntityDTO(p.idProduto, p.modelo, " +
-            "p.tamanho, p.cor, p.setor,  p.valor) from PRODUTO p")
+            "p.tamanho, p.cor, p.descricao, p.setor,  p.valor) from PRODUTO p")
     Page<ProdutoEntityDTO> buscarTodosProdutoPaginacao(Pageable pageable);
 
 }

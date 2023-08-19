@@ -28,6 +28,9 @@ public class ProdutoCreateDTO {
     @Schema(description = "Cor do produto", required = true, example = "Branco")
     private String cor;
 
+    @NotBlank
+    @Schema(description = "Descricao do produto", required = true, example = "Produto de malha fina, se modela ao corpo...")
+    private String descricao;
 
     @NotBlank
     @Schema(description = "Setor do produto", required = true, example = "FEMININO")
