@@ -40,6 +40,7 @@ public class ProdutoController implements ProdutoControllerDoc {
     }
 
 
+
     @GetMapping("listar-setor/{setor}")
     public ResponseEntity<List<ProdutoDTO>> listarProdutosPorSetor(
             @PathVariable("setor") @NotBlank String setor) {
@@ -47,6 +48,7 @@ public class ProdutoController implements ProdutoControllerDoc {
 
         return new ResponseEntity<>(produtoService.listarTodosPorSetor(setor), HttpStatus.OK);
     }
+
 
 
     @GetMapping("/relatorio-produto/")

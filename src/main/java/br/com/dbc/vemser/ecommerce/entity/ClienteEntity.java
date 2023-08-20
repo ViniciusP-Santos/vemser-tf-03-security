@@ -43,4 +43,8 @@ public class ClienteEntity {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PedidoEntity> pedidoEntities = new HashSet<>();
 
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+    private UsuarioEntity usuario;
 }

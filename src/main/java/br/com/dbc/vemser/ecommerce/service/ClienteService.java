@@ -6,29 +6,34 @@ import br.com.dbc.vemser.ecommerce.dto.cliente.ClienteDadosCompletosDTO;
 import br.com.dbc.vemser.ecommerce.dto.cliente.ClientePaginadoDTO;
 import br.com.dbc.vemser.ecommerce.dto.endereco.EnderecoDTO;
 import br.com.dbc.vemser.ecommerce.dto.pedido.PedidoDTO;
+import br.com.dbc.vemser.ecommerce.dto.usuario.LoginDTO;
+import br.com.dbc.vemser.ecommerce.entity.CargoEntity;
 import br.com.dbc.vemser.ecommerce.entity.ClienteEntity;
+import br.com.dbc.vemser.ecommerce.entity.UsuarioEntity;
 import br.com.dbc.vemser.ecommerce.exceptions.RegraDeNegocioException;
+import br.com.dbc.vemser.ecommerce.repository.CargoRepository;
 import br.com.dbc.vemser.ecommerce.repository.ClienteRepository;
+import br.com.dbc.vemser.ecommerce.repository.UsuarioRepository;
 import br.com.dbc.vemser.ecommerce.utils.ConverterEnderecoParaDTOutil;
 import br.com.dbc.vemser.ecommerce.utils.ConverterPedidoParaDTOutil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityExistsException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class ClienteService {
+
     private final ObjectMapper objectMapper;
     private final ClienteRepository clienteRepository;
+    private final CargoRepository cargoRepository;
+    private final UsuarioRepository usuarioRepository;
 
     private final ConverterEnderecoParaDTOutil converterEnderecoParaDTOutil;
     private final ConverterPedidoParaDTOutil converterPedidoParaDTOutil;
@@ -55,7 +60,30 @@ public class ClienteService {
             throw new RegraDeNegocioException(campo);
         }
 
-        return convertToDto(clienteRepository.save(convertToEntity(clienteCreateDTO)));
+        UsuarioEntity user = new UsuarioEntity();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String senhaCript = bCryptPasswordEncoder.encode(clienteCreateDTO.getSenha());
+
+        user.setSenha(senhaCript);
+        user.setLogin(clienteCreateDTO.getEmail());
+
+        Optional<CargoEntity> userCargo = cargoRepository.findByNome("ROLE_USUARIO");
+
+        if (userCargo.isEmpty()){
+            throw new RegraDeNegocioException("Cargo não existe");
+        }
+
+        user.getCargos().add(userCargo.get());
+        UsuarioEntity novoUser = usuarioRepository.save(user);
+
+        ClienteEntity cliente = objectMapper.convertValue(clienteCreateDTO, ClienteEntity.class);
+        cliente.setUsuario(novoUser);
+
+        ClienteDTO clienteDTO = convertToDto(clienteRepository.save((cliente)));
+        clienteDTO.setSenha(senhaCript);
+        clienteDTO.setIdUsuario(novoUser.getIdUsuario());
+
+        return clienteDTO;
     }
 
     public List<ClienteDadosCompletosDTO> listarClientesComTodosOsDados() {

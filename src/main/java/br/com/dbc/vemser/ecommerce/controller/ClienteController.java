@@ -18,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityExistsException;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @Data
@@ -30,20 +30,19 @@ public class ClienteController implements ClienteControllerDoc {
 
     private final ClienteService clienteService;
 
-
     @Override
     public ResponseEntity<List<ClienteDadosCompletosDTO>> buscarClientesDadosCompletos() {
         return new ResponseEntity<>(clienteService.listarClientesComTodosOsDados(), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<List<ClienteDTO>> findAll(@RequestParam(required = false) Integer idCliente) {
-        return new ResponseEntity<List<ClienteDTO>>(clienteService.findAll(idCliente), HttpStatus.OK);
+    public ResponseEntity<List<ClienteDTO>> findAll(@Positive @RequestParam(required = false) Integer idCliente) throws Exception {
+        return new ResponseEntity<>(clienteService.findAll(idCliente), HttpStatus.OK);
     }
 
     @Override
-    public Page<ClientePaginadoDTO> listarClientePaginado(Integer pagina,
-                                                          Integer quantidadeRegistros) {
+    public Page<ClientePaginadoDTO> listarClientePaginado(@Positive Integer pagina,
+                                                          @Positive Integer quantidadeRegistros) {
 
         Sort ordenacao = Sort.by("nome").and(Sort.by("cpf"));
 
@@ -52,24 +51,23 @@ public class ClienteController implements ClienteControllerDoc {
         return clienteService.clientePaginado(pageable);
     }
 
-
     @Override
-    public ResponseEntity<ClienteDTO> getById(@PathVariable Integer idCliente) throws RegraDeNegocioException {
-        return new ResponseEntity<ClienteDTO>(clienteService.getByid(idCliente), HttpStatus.OK);
+    public ResponseEntity<ClienteDTO> getById(@Positive @PathVariable Integer idCliente) throws RegraDeNegocioException {
+        return new ResponseEntity<>(clienteService.getByid(idCliente), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ClienteDTO> save(@RequestBody ClienteCreateDTO cliente) throws RegraDeNegocioException {
-        return new ResponseEntity<ClienteDTO>(clienteService.save(cliente), HttpStatus.OK);
+    public ResponseEntity<ClienteDTO> save(@Validated @RequestBody ClienteCreateDTO cliente) throws RegraDeNegocioException {
+        return new ResponseEntity<>(clienteService.save(cliente), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ClienteDTO> update(@PathVariable Integer idCliente, @RequestBody ClienteCreateDTO cliente) throws RegraDeNegocioException {
-        return new ResponseEntity<ClienteDTO>(clienteService.update(idCliente, cliente), HttpStatus.OK);
+    public ResponseEntity<ClienteDTO> update(@Positive @PathVariable Integer idCliente, @RequestBody ClienteCreateDTO cliente) throws RegraDeNegocioException {
+        return new ResponseEntity<>(clienteService.update(idCliente, cliente), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> delete(@PathVariable Integer idCliente) {
+    public ResponseEntity<Void> delete(@Positive @PathVariable Integer idCliente) {
         clienteService.delete(idCliente);
         return ResponseEntity.ok().build();
     }

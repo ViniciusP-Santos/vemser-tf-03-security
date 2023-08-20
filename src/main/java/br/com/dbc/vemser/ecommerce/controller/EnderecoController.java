@@ -1,13 +1,11 @@
 package br.com.dbc.vemser.ecommerce.controller;
 
 import br.com.dbc.vemser.ecommerce.doc.EnderecoControllerDoc;
-
 import br.com.dbc.vemser.ecommerce.dto.endereco.EnderecoCreateDTO;
 import br.com.dbc.vemser.ecommerce.dto.endereco.EnderecoDTO;
 import br.com.dbc.vemser.ecommerce.service.EnderecoService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -33,10 +31,11 @@ public class EnderecoController implements EnderecoControllerDoc {
 
     @GetMapping("/{idEndereco}")
     public ResponseEntity<EnderecoDTO> getEnderecoById(@Positive(message = "id deve ser maior que zero")
-                                                           @PathVariable("idEndereco")
-                                                           Integer idEndereco) throws Exception {
+                                                       @PathVariable("idEndereco")
+                                                       Integer idEndereco) throws Exception {
         return new ResponseEntity<>(enderecoService.getEnderecoById(idEndereco), HttpStatus.OK);
     }
+
     @GetMapping("/cliente/{idCliente}")
     public ResponseEntity<List<EnderecoDTO>> listarEnderecoByIdCliente(@Positive(message = "id deve ser maior que zero") @PathVariable("idCliente") Integer idCliente) throws Exception {
         return new ResponseEntity<>(enderecoService.listarEnderecoByIdCliente(idCliente), HttpStatus.OK);
@@ -46,7 +45,7 @@ public class EnderecoController implements EnderecoControllerDoc {
     @PostMapping("/{idCliente}")
     public ResponseEntity<EnderecoDTO> create(@Positive(message = "id deve ser maior que zero") @PathVariable("idCliente") Integer idCliente,
                                               @Valid @RequestBody EnderecoCreateDTO enderecoCreateDTO) throws Exception {
-        return new ResponseEntity<EnderecoDTO>(enderecoService.create(idCliente , enderecoCreateDTO), HttpStatus.OK);
+        return new ResponseEntity<EnderecoDTO>(enderecoService.create(idCliente, enderecoCreateDTO), HttpStatus.OK);
     }
 
     @PutMapping("/{idEndereco}")
