@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityExistsException;
 import java.util.List;
 
 @Data
@@ -42,7 +43,6 @@ public class ClienteController implements ClienteControllerDoc {
 
     @Override
     public Page<ClientePaginadoDTO> listarClientePaginado(Integer pagina,
-
                                                           Integer quantidadeRegistros) {
 
         Sort ordenacao = Sort.by("nome").and(Sort.by("cpf"));
@@ -59,7 +59,7 @@ public class ClienteController implements ClienteControllerDoc {
     }
 
     @Override
-    public ResponseEntity<ClienteDTO> save(@RequestBody ClienteCreateDTO cliente) {
+    public ResponseEntity<ClienteDTO> save(@RequestBody ClienteCreateDTO cliente) throws RegraDeNegocioException {
         return new ResponseEntity<ClienteDTO>(clienteService.save(cliente), HttpStatus.OK);
     }
 
