@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

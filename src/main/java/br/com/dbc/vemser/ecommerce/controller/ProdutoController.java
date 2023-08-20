@@ -39,13 +39,11 @@ public class ProdutoController implements ProdutoControllerDoc {
     }
 
 
-
     @GetMapping("/relatorio-produto/")
-    public ResponseEntity<List<ProdutoRelatorioDTO>> listarRelatorioProduto()  {
+    public ResponseEntity<List<ProdutoRelatorioDTO>> listarRelatorioProduto() {
 
         return new ResponseEntity<>(produtoService.buscarProdutosRelatorio(), HttpStatus.OK);
     }
-
 
 
     @GetMapping("paginacao")

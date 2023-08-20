@@ -30,7 +30,6 @@ public class PedidoController implements PedidoControllerDoc {
     private final PedidoService pedidoService;
 
 
-
     @GetMapping
     public ResponseEntity<List<PedidoDTO>> listar() {
         return new ResponseEntity<>(pedidoService.listar(), HttpStatus.OK);

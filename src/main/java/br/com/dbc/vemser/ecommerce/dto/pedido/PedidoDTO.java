@@ -14,14 +14,10 @@ import java.util.List;
 public class PedidoDTO {
 
 
-    private Integer idPedido;
-
-    private Integer idCliente;
-
-    private Double valor;
-
-    private String statusPedido;
-
     List<ProdutoEntity> produtos;
+    private Integer idPedido;
+    private Integer idCliente;
+    private Double valor;
+    private String statusPedido;
 
 }

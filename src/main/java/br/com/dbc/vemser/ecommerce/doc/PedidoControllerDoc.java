@@ -8,9 +8,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +41,6 @@ public interface PedidoControllerDoc {
     )
     @GetMapping("/relatorio-cliente-pedido")
     public ResponseEntity<List<RelatorioPedidoDTO>> listarClientesRelatorio();
-
 
 
     @Operation(summary = "Listar todos os relatórios do pedidos paginado", description = "Lista de relatorio dos pedidos cadastrados no banco")

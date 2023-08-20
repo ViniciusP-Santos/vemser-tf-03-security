@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -33,7 +32,7 @@ public class ClienteCreateDTO {
     @Schema(description = "Endereço de e-mail da pessoa", example = "nome.sobrenome@mail.com")
     private String email;
 
-    @CPF
+    //    @CPF
     @NotNull
     @Size(min = 11, max = 11, message = "O CPF precisa ter 11 caracteres")
     @Schema(description = "CPF da pessoa", example = "12345678909", minLength = 11, maxLength = 11)

@@ -31,6 +31,11 @@ public class PedidoService {
     private final ClienteRepository clienteRepository;
     private final ObjectMapper objectMapper;
 
+    private static void validacaoPedidoFinalizado(PedidoEntity pedidoAchado) throws RegraDeNegocioException {
+        if (pedidoAchado.getStatusPedido().equalsIgnoreCase("S"))
+            throw new RegraDeNegocioException("Pedido finalizado!");
+    }
+
     public PedidoDTO criarPedido(Integer idCliente, PedidoCreateDTO idProduto) throws Exception {
 
         ClienteEntity cliente = clienteService.findById(idCliente);
@@ -67,7 +72,6 @@ public class PedidoService {
         return pedidoRepository.relatorioPedido();
     }
 
-
     private PedidoDTO converterPedidooParaDTO(PedidoEntity pedido) {
 
         PedidoDTO pedidoDTO = objectMapper.convertValue(pedido, PedidoDTO.class);
@@ -88,7 +92,6 @@ public class PedidoService {
 
     }
 
-
     public Void adicionarProdutoAoPedido(Integer idPedido, Integer idProduto) throws RegraDeNegocioException {
 
         PedidoEntity pedidoAchado = pedidoRepository.getById(idPedido);
@@ -105,11 +108,6 @@ public class PedidoService {
 
         return null;
 
-    }
-
-    private static void validacaoPedidoFinalizado(PedidoEntity pedidoAchado) throws RegraDeNegocioException {
-        if (pedidoAchado.getStatusPedido().equalsIgnoreCase("S"))
-            throw new RegraDeNegocioException("Pedido finalizado!");
     }
 
     public Void removerProdutoDoPedido(Integer idPedido, Integer idProduto) throws RegraDeNegocioException {
@@ -161,7 +159,6 @@ public class PedidoService {
         PedidoEntity save = pedidoRepository.save(pedidoEntity);
 
         PedidoDTO pedidoDTO = objectMapper.convertValue(save, PedidoDTO.class);
-
 
 
         return pedidoDTO;
