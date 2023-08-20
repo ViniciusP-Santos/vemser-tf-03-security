@@ -17,7 +17,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,8 +33,22 @@ public class ClienteService {
     private final ConverterEnderecoParaDTOutil converterEnderecoParaDTOutil;
     private final ConverterPedidoParaDTOutil converterPedidoParaDTOutil;
 
+    public Map<String, String> validarNovoCliente(ClienteCreateDTO clienteCreateDTO) {
+        Map<String, String> existe = new HashMap<>();
+        existe.put("email", clienteRepository.existsClienteEntitieByEmail(clienteCreateDTO.getEmail()) ? "email" : null);
+        existe.put("cpf", clienteRepository.existsClienteEntitieByCpf(clienteCreateDTO.getCpf()) ? " cpf" : null);
+        existe.put("telefone", clienteRepository.existsClienteEntitieByTelefone(clienteCreateDTO.getTelefone()) ? " telefone" : null);
 
-    public ClienteDTO save(ClienteCreateDTO clienteCreateDTO) {
+        return existe;
+    }
+
+    public ClienteDTO save(ClienteCreateDTO clienteCreateDTO) throws RegraDeNegocioException {
+        Map<String, String> campo = validarNovoCliente(clienteCreateDTO);
+
+        if (campo != null) {
+            throw new RegraDeNegocioException(campo);
+        }
+
         return convertToDto(clienteRepository.save(convertToEntity(clienteCreateDTO)));
     }
 
