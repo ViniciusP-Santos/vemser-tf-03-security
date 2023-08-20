@@ -38,4 +38,9 @@ public class ClienteCreateDTO {
     @Schema(description = "CPF da pessoa", example = "12345678909", minLength = 11, maxLength = 11)
     private String cpf;
 
+    @NotNull
+    @Size(min = 3, max = 20, message = "Senha precisa ter no mínimo 3 caracteres e no máximo 20")
+    @Schema(description = "Senha do cliente", example = "senha123", minLength = 3, maxLength = 20)
+    private String senha;
+
 }

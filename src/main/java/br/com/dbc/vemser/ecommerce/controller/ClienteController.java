@@ -36,7 +36,7 @@ public class ClienteController implements ClienteControllerDoc {
     }
 
     @Override
-    public ResponseEntity<List<ClienteDTO>> findAll(@Positive @RequestParam(required = false) Integer idCliente) {
+    public ResponseEntity<List<ClienteDTO>> findAll(@Positive @RequestParam(required = false) Integer idCliente) throws Exception {
         return new ResponseEntity<>(clienteService.findAll(idCliente), HttpStatus.OK);
     }
 

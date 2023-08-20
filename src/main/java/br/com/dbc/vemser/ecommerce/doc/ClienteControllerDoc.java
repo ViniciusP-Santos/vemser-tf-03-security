@@ -11,8 +11,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 public interface ClienteControllerDoc {
@@ -29,7 +31,7 @@ public interface ClienteControllerDoc {
 
     )
     @GetMapping("/clientes-dados-completos")
-    public ResponseEntity<List<ClienteDadosCompletosDTO>> buscarClientesDadosCompletos();
+    ResponseEntity<List<ClienteDadosCompletosDTO>> buscarClientesDadosCompletos();
 
 
     @Operation(summary = "Listar todos clientes", description = "Lista todos os clientes do banco")
@@ -42,7 +44,7 @@ public interface ClienteControllerDoc {
             }
     )
     @GetMapping
-    ResponseEntity<List<ClienteDTO>> findAll(@RequestParam(required = false) Integer idCliente) throws Exception;
+    ResponseEntity<List<ClienteDTO>> findAll(@Positive @RequestParam(required = false) Integer idCliente) throws Exception;
 
     @Operation(summary = "Listar cliente por ID", description = "Lista cliente pelo ID no banco")
     @ApiResponses(
@@ -54,7 +56,7 @@ public interface ClienteControllerDoc {
             }
     )
     @GetMapping("/{idCliente}")
-    ResponseEntity<ClienteDTO> getById(@PathVariable Integer idCliente) throws RegraDeNegocioException;
+    ResponseEntity<ClienteDTO> getById(@Positive @PathVariable Integer idCliente) throws RegraDeNegocioException;
 
     @Operation(summary = "Criar um novo cliente", description = "Cria e adiciona um novo cliente no banco")
     @ApiResponses(
@@ -67,7 +69,7 @@ public interface ClienteControllerDoc {
             }
     )
     @PostMapping
-    ResponseEntity<ClienteDTO> save(@RequestBody ClienteCreateDTO cliente) throws RegraDeNegocioException;
+    ResponseEntity<ClienteDTO> save(@Validated @RequestBody ClienteCreateDTO cliente) throws RegraDeNegocioException;
 
     @Operation(summary = "Atualizar o cliente pelo ID", description = "Atualiza o cliente informado pelo ID no banco")
     @ApiResponses(
@@ -79,8 +81,8 @@ public interface ClienteControllerDoc {
             }
     )
     @PutMapping("/{idCliente}")
-    ResponseEntity<ClienteDTO> update(@PathVariable Integer idCliente,
-                                      @RequestBody ClienteCreateDTO cliente) throws RegraDeNegocioException;
+    public ResponseEntity<ClienteDTO> update(@Positive @PathVariable Integer idCliente,
+                                             @RequestBody ClienteCreateDTO cliente) throws RegraDeNegocioException;
 
     @Operation(summary = "Deletar o cliente pelo ID", description = "Deleta o cliente informado pelo ID no banco")
     @ApiResponses(
@@ -93,7 +95,7 @@ public interface ClienteControllerDoc {
             }
     )
     @DeleteMapping("/{idCliente}")
-    ResponseEntity<Void> delete(@PathVariable Integer idCliente);
+    ResponseEntity<Void> delete(@Positive @PathVariable Integer idCliente);
 
 
     @Operation(summary = "Listar todos clientes com paginação", description = "Lista todos os clientes do banco")
@@ -108,6 +110,7 @@ public interface ClienteControllerDoc {
 
     )
     @GetMapping("/paginacao")
-    public Page<ClientePaginadoDTO> listarClientePaginado(Integer pagina, Integer quantidadeRegistros);
+    public Page<ClientePaginadoDTO> listarClientePaginado(@Positive Integer pagina,
+                                                          @Positive Integer quantidadeRegistros);
 
 }
