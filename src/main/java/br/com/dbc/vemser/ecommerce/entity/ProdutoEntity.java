@@ -29,30 +29,30 @@ public class ProdutoEntity {
     private Integer idProduto;
 
     @Column(name = "MODELO")
-    @NotBlank(message = "O modelo não pode estar em branco")
+//    @NotBlank(message = "O modelo não pode estar em branco")
     private String modelo;
 
     @Column(name = "TAMANHO")
-    @NotNull(message = "O tamanho não pode estar em branco")
+//    @NotNull(message = "O tamanho não pode estar em branco")
     @Enumerated(EnumType.STRING)
     private TipoTamanho tamanho;
 
     @Column(name = "COR")
-    @NotBlank(message = "A cor não pode estar em branco")
+//    @NotBlank(message = "A cor não pode estar em branco")
     private String cor;
 
     @Column(name = "DESCRICAO")
-    @NotBlank(message = "A descrição não pode estar em branco")
+//    @NotBlank(message = "A descrição não pode estar em branco")
     private String descricao;
 
     @Column(name = "SETOR")
-    @NotNull(message = "O setor não pode estar em branco")
+//    @NotNull(message = "O setor não pode estar em branco")
     @Enumerated(EnumType.STRING)
     private TipoSetor setor;
 
     @Column(name = "VALOR")
-    @NotNull(message = "O valor não pode estar em branco")
-    @Positive(message = "O valor deve ser positivo")
+//    @NotNull(message = "O valor não pode estar em branco")
+//    @Positive(message = "O valor deve ser positivo")
     private Double valor;
 
     @JsonIgnore
