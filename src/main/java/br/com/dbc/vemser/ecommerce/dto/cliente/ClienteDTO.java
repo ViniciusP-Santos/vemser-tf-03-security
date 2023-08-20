@@ -12,4 +12,6 @@ import lombok.Setter;
 public class ClienteDTO extends ClienteCreateDTO {
 
     private Integer idCliente;
+    private Integer idUsuario;
+
 }
