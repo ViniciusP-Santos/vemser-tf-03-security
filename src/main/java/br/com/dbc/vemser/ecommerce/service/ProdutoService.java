@@ -31,6 +31,14 @@ public class ProdutoService {
                 .map(converterProdutoParaDTOutil::converteProdutoParaDTO).toList();
     }
 
+    public List<ProdutoDTO> listarTodosPorSetor(String setor) {
+
+        return produtoRepository.findAll().stream()
+                .filter(produto -> produto.getSetor().toString().equalsIgnoreCase(setor))
+                .map(converterProdutoParaDTOutil::converteProdutoParaDTO).toList();
+    }
+
+
     public Page<ProdutoEntityDTO> listarPaginado(Pageable pageable) {
         return produtoRepository.buscarTodosProdutoPaginacao(pageable);
     }
@@ -47,7 +55,7 @@ public class ProdutoService {
 
     }
 
-    public List<ProdutoRelatorioDTO> buscarProdutosRelatorio(){
+    public List<ProdutoRelatorioDTO> buscarProdutosRelatorio() {
 
         return produtoRepository.buscarProdutosRelatorio();
 

@@ -18,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
@@ -39,13 +40,20 @@ public class ProdutoController implements ProdutoControllerDoc {
     }
 
 
+    @GetMapping("listar-setor/{setor}")
+    public ResponseEntity<List<ProdutoDTO>> listarProdutosPorSetor(
+            @PathVariable("setor") @NotBlank String setor) {
+
+
+        return new ResponseEntity<>(produtoService.listarTodosPorSetor(setor), HttpStatus.OK);
+    }
+
 
     @GetMapping("/relatorio-produto/")
-    public ResponseEntity<List<ProdutoRelatorioDTO>> listarRelatorioProduto()  {
+    public ResponseEntity<List<ProdutoRelatorioDTO>> listarRelatorioProduto() {
 
         return new ResponseEntity<>(produtoService.buscarProdutosRelatorio(), HttpStatus.OK);
     }
-
 
 
     @GetMapping("paginacao")

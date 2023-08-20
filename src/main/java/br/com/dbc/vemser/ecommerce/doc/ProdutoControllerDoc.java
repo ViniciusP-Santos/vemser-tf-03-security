@@ -9,10 +9,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
@@ -30,6 +32,20 @@ public interface ProdutoControllerDoc {
     @GetMapping
     public ResponseEntity<List<ProdutoDTO>> listarProdutos(
             @RequestParam(required = false) Integer idProduto) throws Exception;
+
+
+    @Operation(summary = "Listar todos produtos por setor", description = "Lista todos produtos do banco")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Retorna lista de todos produtos por setor"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "404", description = "Página não encontrada"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
+    @GetMapping("listar-setor/{setor}")
+    public ResponseEntity<List<ProdutoDTO>> listarProdutosPorSetor(
+            @PathVariable("setor") @NotBlank String setor);
 
 
     @Operation(summary = "Listar produto por ID", description = "Lista produto por ID no banco")
