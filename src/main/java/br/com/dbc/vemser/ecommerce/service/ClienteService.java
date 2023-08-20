@@ -35,9 +35,15 @@ public class ClienteService {
 
     public Map<String, String> validarNovoCliente(ClienteCreateDTO clienteCreateDTO) {
         Map<String, String> existe = new HashMap<>();
-        existe.put("email", clienteRepository.existsClienteEntitieByEmail(clienteCreateDTO.getEmail()) ? "email" : null);
-        existe.put("cpf", clienteRepository.existsClienteEntitieByCpf(clienteCreateDTO.getCpf()) ? " cpf" : null);
-        existe.put("telefone", clienteRepository.existsClienteEntitieByTelefone(clienteCreateDTO.getTelefone()) ? " telefone" : null);
+        if (clienteRepository.existsClienteEntitieByEmail(clienteCreateDTO.getEmail())) {
+            existe.put("email", "já cadastrado");
+        }
+        if (clienteRepository.existsClienteEntitieByCpf(clienteCreateDTO.getCpf())) {
+            existe.put("cpf", "já cadastrado");
+        }
+        if (clienteRepository.existsClienteEntitieByTelefone(clienteCreateDTO.getTelefone())) {
+            existe.put("telefone", "já cadastrado");
+        }
 
         return existe;
     }
@@ -45,7 +51,7 @@ public class ClienteService {
     public ClienteDTO save(ClienteCreateDTO clienteCreateDTO) throws RegraDeNegocioException {
         Map<String, String> campo = validarNovoCliente(clienteCreateDTO);
 
-        if (campo != null) {
+        if (campo.size() != 0) {
             throw new RegraDeNegocioException(campo);
         }
 
