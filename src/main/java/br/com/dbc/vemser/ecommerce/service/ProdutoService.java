@@ -47,7 +47,7 @@ public class ProdutoService {
 
     }
 
-    public List<ProdutoRelatorioDTO> buscarProdutosRelatorio(){
+    public List<ProdutoRelatorioDTO> buscarProdutosRelatorio() {
 
         return produtoRepository.buscarProdutosRelatorio();
 

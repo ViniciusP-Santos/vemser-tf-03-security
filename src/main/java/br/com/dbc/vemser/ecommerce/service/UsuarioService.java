@@ -41,10 +41,10 @@ public class UsuarioService {
     }
 
     public LoginDTO cadastro(LoginDTO user, Integer role) throws RegraDeNegocioException {
-        if (role == null){
+        if (role == null) {
             role = 2;
         }
-        if (role < 1 || role > 3){
+        if (role < 1 || role > 3) {
             throw new RegraDeNegocioException("Cargo não existente");
         }
 

@@ -1,11 +1,10 @@
 package br.com.dbc.vemser.ecommerce.controller;
 
-import br.com.dbc.vemser.ecommerce.entity.CargoEntity;
-import br.com.dbc.vemser.ecommerce.service.UsuarioService;
 import br.com.dbc.vemser.ecommerce.dto.usuario.LoginDTO;
 import br.com.dbc.vemser.ecommerce.entity.UsuarioEntity;
 import br.com.dbc.vemser.ecommerce.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.ecommerce.security.TokenService;
+import br.com.dbc.vemser.ecommerce.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 
 @RestController
 @RequestMapping("/auth")

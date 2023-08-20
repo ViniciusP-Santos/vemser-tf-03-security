@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -95,10 +94,6 @@ public interface ClienteControllerDoc {
     )
     @DeleteMapping("/{idCliente}")
     ResponseEntity<Void> delete(@PathVariable Integer idCliente);
-
-
-
-
 
 
     @Operation(summary = "Listar todos clientes com paginação", description = "Lista todos os clientes do banco")
