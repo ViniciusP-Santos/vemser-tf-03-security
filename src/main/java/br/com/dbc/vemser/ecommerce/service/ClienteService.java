@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -34,6 +35,7 @@ public class ClienteService {
     private final ClienteRepository clienteRepository;
     private final CargoRepository cargoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder bCript;
 
     private final ConverterEnderecoParaDTOutil converterEnderecoParaDTOutil;
     private final ConverterPedidoParaDTOutil converterPedidoParaDTOutil;
@@ -61,8 +63,7 @@ public class ClienteService {
         }
 
         UsuarioEntity user = new UsuarioEntity();
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String senhaCript = bCryptPasswordEncoder.encode(clienteCreateDTO.getSenha());
+        String senhaCript = bCript.encode(clienteCreateDTO.getSenha());
 
         user.setSenha(senhaCript);
         user.setLogin(clienteCreateDTO.getEmail());
@@ -80,7 +81,7 @@ public class ClienteService {
         cliente.setUsuario(novoUser);
 
         ClienteDTO clienteDTO = convertToDto(clienteRepository.save((cliente)));
-        clienteDTO.setSenha(senhaCript);
+
         clienteDTO.setIdUsuario(novoUser.getIdUsuario());
 
         return clienteDTO;
@@ -133,7 +134,9 @@ public class ClienteService {
     }
 
     public ClienteDTO convertToDto(ClienteEntity clienteEntity) {
-        return objectMapper.convertValue(clienteEntity, ClienteDTO.class);
+        ClienteDTO clienteDTO = objectMapper.convertValue(clienteEntity, ClienteDTO.class);
+        clienteDTO.setIdUsuario(clienteEntity.getUsuario().getIdUsuario());
+        return clienteDTO;
     }
 
     public ClienteEntity convertToEntity(ClienteCreateDTO clienteCreateDTO) {
