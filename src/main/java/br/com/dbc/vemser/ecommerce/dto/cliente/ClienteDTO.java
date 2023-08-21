@@ -9,9 +9,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClienteDTO extends ClienteCreateDTO {
+public class ClienteDTO {
 
     private Integer idCliente;
     private Integer idUsuario;
+    private String nome;
+    private String telefone;
+    private String email;
+    private String cpf;
 
 }

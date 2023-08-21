@@ -2,6 +2,7 @@ package br.com.dbc.vemser.ecommerce.service;
 
 import br.com.dbc.vemser.ecommerce.dto.usuario.LoginDTO;
 import br.com.dbc.vemser.ecommerce.dto.usuario.UserAtualizacaoDTO;
+import br.com.dbc.vemser.ecommerce.dto.usuario.UsuarioLogadoDTO;
 import br.com.dbc.vemser.ecommerce.entity.CargoEntity;
 import br.com.dbc.vemser.ecommerce.entity.UsuarioEntity;
 import br.com.dbc.vemser.ecommerce.exceptions.RegraDeNegocioException;
@@ -38,8 +39,9 @@ public class UsuarioService {
         return Integer.parseInt(index);
     }
 
-    public UsuarioEntity getLoggedUser() throws RegraDeNegocioException {
-        return findById(getIdLoggedUser());
+    public UsuarioLogadoDTO getLoggedUser() throws RegraDeNegocioException {
+        UsuarioLogadoDTO usuarioLogadoDTO = objectMapper.convertValue(findById(getIdLoggedUser()), UsuarioLogadoDTO.class);
+        return usuarioLogadoDTO;
     }
 
     public UsuarioEntity findById(Integer idUsuario) throws RegraDeNegocioException {
@@ -56,8 +58,7 @@ public class UsuarioService {
             throw new RegraDeNegocioException("Cargo não existente");
         }
 
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String senhaCript = bCryptPasswordEncoder.encode(user.getSenha());
+        String senhaCript = bCrypt.encode(user.getSenha());
 
         UsuarioEntity novoUser = new UsuarioEntity();
         CargoEntity cargo = new CargoEntity();

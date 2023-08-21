@@ -27,8 +27,6 @@ public interface ClienteControllerDoc {
                     @ApiResponse(responseCode = "404", description = "Página não encontrada"),
                     @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
             }
-
-
     )
     @GetMapping("/clientes-dados-completos")
     ResponseEntity<List<ClienteDadosCompletosDTO>> buscarClientesDadosCompletos();

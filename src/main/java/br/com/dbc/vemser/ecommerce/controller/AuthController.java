@@ -1,7 +1,9 @@
 package br.com.dbc.vemser.ecommerce.controller;
 
+import br.com.dbc.vemser.ecommerce.doc.AuthControllerDoc;
 import br.com.dbc.vemser.ecommerce.dto.usuario.LoginDTO;
 import br.com.dbc.vemser.ecommerce.dto.usuario.UserAtualizacaoDTO;
+import br.com.dbc.vemser.ecommerce.dto.usuario.UsuarioLogadoDTO;
 import br.com.dbc.vemser.ecommerce.entity.UsuarioEntity;
 import br.com.dbc.vemser.ecommerce.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.ecommerce.security.TokenService;
@@ -22,7 +24,7 @@ import javax.validation.constraints.NotBlank;
 @RequestMapping("/auth")
 @Validated
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthController implements AuthControllerDoc {
     public final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
     private final UsuarioService usuarioService;
@@ -51,14 +53,14 @@ public class AuthController {
     }
 
     @GetMapping("/usuario-logado")
-    public UsuarioEntity recuperarUsuarioLogado() throws RegraDeNegocioException {
+    public UsuarioLogadoDTO recuperarUsuarioLogado() throws RegraDeNegocioException {
 
 
         return usuarioService.getLoggedUser();
     }
 
     @PutMapping("/usuario-trocar-senha")
-    public ResponseEntity<Void> recuperarUsuarioLogado(@RequestBody LoginDTO loginDTO) throws RegraDeNegocioException {
+    public ResponseEntity<Void> alterarSenhaDeUsuario(@RequestBody LoginDTO loginDTO) throws RegraDeNegocioException {
 
         usuarioService.atualizarSenha(loginDTO);
 
