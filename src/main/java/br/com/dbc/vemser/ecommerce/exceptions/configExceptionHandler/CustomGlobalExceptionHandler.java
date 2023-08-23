@@ -70,6 +70,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
                                                   HttpServletRequest request) {
             Map<String, Object> body = createBody(exception);
 
+
             return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
@@ -78,10 +79,11 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
                                                   HttpServletRequest request) {
         Map<String, String> errors = exception.getCamposViolados();
 
+
         Map<String, Object> response = new HashMap<>();
         response.put("status", HttpStatus.BAD_REQUEST.value());
         response.put("message", "Campos inválidos encontrados");
-        response.put("errors", errors);
+        response.put("errors", exception.getMessage());
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

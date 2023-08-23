@@ -41,6 +41,7 @@ public class ClienteService {
 
     public Map<String, String> validarNovoCliente(ClienteCreateDTO clienteCreateDTO) {
         Map<String, String> existe = new HashMap<>();
+
         if (clienteRepository.existsClienteEntitieByEmail(clienteCreateDTO.getEmail())) {
             existe.put("email", "já cadastrado");
         }
@@ -57,9 +58,11 @@ public class ClienteService {
     public ClienteDTO save(ClienteCreateDTO clienteCreateDTO) throws UniqueFieldExistsException, RegraDeNegocioException {
         Map<String, String> campo = validarNovoCliente(clienteCreateDTO);
 
+
         if (campo.size() != 0) {
             throw new UniqueFieldExistsException(campo);
         }
+
 
         UsuarioEntity user = new UsuarioEntity();
         String senhaCript = bCript.encode(clienteCreateDTO.getSenha());

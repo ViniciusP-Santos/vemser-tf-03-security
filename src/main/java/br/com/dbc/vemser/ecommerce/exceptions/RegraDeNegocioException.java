@@ -7,4 +7,5 @@ public class RegraDeNegocioException extends Exception {
         super(mensagemDeErro);
     }
 
+
 }
