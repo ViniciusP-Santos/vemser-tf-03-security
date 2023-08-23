@@ -60,14 +60,14 @@ public class EnderecoService {
     }
 
     public EnderecoDTO create(Integer idCliente, EnderecoCreateDTO enderecoCreateDTO) throws Exception {
-        ClienteEntity clienteEntity = clienteRepository.findById(idCliente).get();
+        Optional<ClienteEntity> clienteEntity = clienteRepository.findById(idCliente);
 
-        if (clienteEntity == null) {
+        if (clienteEntity.isEmpty()) {
             throw new RegraDeNegocioException("Cliente não encontrado");
         }
 
         EnderecoEntity entity = converterByEndereco(enderecoCreateDTO);
-        entity.setCliente(clienteEntity);
+        entity.setCliente(clienteEntity.get());
 
         EnderecoEntity enderecoCreated = enderecoRepository.save(entity);
 
