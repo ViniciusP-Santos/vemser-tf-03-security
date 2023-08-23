@@ -24,7 +24,7 @@ public class PedidoEntity {
     private Integer idPedido;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
     private ClienteEntity cliente;
 
@@ -42,19 +42,30 @@ public class PedidoEntity {
     )
     private List<ProdutoEntity> produtoEntities = new ArrayList<>();
 
+    @Column(name = "quantidade_produtos")
+    private Integer quantidadeProdutos = 0;
+
     public void addProduto(ProdutoEntity produtoEntity) {
         produtoEntity.addPedido(this);
         produtoEntities.add(produtoEntity);
+        atualizarQuantidadeProdutos();
         this.valor += produtoEntity.getValor();
+
     }
 
     public void removerProduto(ProdutoEntity produtoEntity) {
         Double valorProduto = produtoEntity.getValor();
         boolean remove = produtoEntities.remove(produtoEntity);
+        atualizarQuantidadeProdutos();
         if (remove) {
             this.valor -= valorProduto;
             produtoEntity.removePedido(this);
         }
+    }
+
+    public void atualizarQuantidadeProdutos(){
+
+        this.quantidadeProdutos = this.produtoEntities.size();
     }
 
 

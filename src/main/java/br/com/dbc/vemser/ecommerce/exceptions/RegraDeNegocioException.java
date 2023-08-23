@@ -11,11 +11,15 @@ public class RegraDeNegocioException extends Exception {
         super(mensagemDeErro);
     }
 
-    public RegraDeNegocioException(Map<String, String> camposViolados) {
-        this.camposViolados = camposViolados;
-    }
+//    public RegraDeNegocioException(Map<String, String> camposViolados) {
+//
+//        this.camposViolados = camposViolados;
+//    }
+//
+//    public Map<String, String> getCamposViolados() {
+//
+//        return camposViolados;
+//    }
 
-    public Map<String, String> getCamposViolados() {
-        return camposViolados;
-    }
+
 }
