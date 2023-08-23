@@ -40,7 +40,8 @@ public class PedidoService {
     public PedidoDTO criarPedido(Integer idCliente, PedidoCreateDTO idProduto) throws RegraDeNegocioException {
 
         ClienteEntity cliente = clienteService.findById(idCliente);
-        ProdutoEntity produtoEntityBuscado = produtoRepository.findByIdProduto(idProduto.getIdProduto());
+        ProdutoEntity produtoEntityBuscado = produtoRepository.findById(idProduto.getIdProduto())
+                .orElseThrow(() -> new RegraDeNegocioException("Produto não encontrado!"));
 
         PedidoEntity pedido = new PedidoEntity();
         pedido.setStatusPedido("N");
